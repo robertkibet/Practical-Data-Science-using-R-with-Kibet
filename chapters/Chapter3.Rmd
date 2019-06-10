@@ -9,3 +9,37 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 This is based on Manesh Book, practical Data Science, 2014
+
+### Text Files
+This is the simplest way of reading data into R, using delimited text files suh as CSV and TSV
+```{r}
+spam.raw <- read.csv('D:/projects/data_science/Practical-Data-Science-using-R-with-Kibet/source_datasets/spam.csv', stringsAsFactors = F)
+head(spam.raw, 5)
+
+```
+
+### Make a model
+```{r}
+#get the first element
+spam.raw[1, ]
+```
+```{r}
+# get first 5 elements from a specific collumn
+head(spam.raw$v1, 5)
+```
+```{r}
+#easy way to access collumn names without using the $ symbol is using attach
+attach(spam.raw)
+#lets access collumn v2
+#then we can view the collumn directly
+head(v2,5)
+```
+
+## Cleaning Up Data
+After loading our data, the next step is cleaning this data.
+One way is looking for missing values and making a decision on this missing values.
+```{r}
+survey.raw <- read.csv(file.choose(), stringsAsFactors = F)
+```
+
+

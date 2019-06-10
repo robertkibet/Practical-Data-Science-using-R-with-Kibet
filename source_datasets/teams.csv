@@ -1,0 +1,31 @@
+"team","code","league","division","games","wins","losses","pct","payroll"
+"Arizona Diamondbacks","ARI","NL","West",162,81,81,0.5,67069833
+"Atlanta Braves","ATL","NL","East",162,94,68,0.58,86208000
+"Baltimore Orioles","BAL","AL","East",162,93,69,0.574,76704000
+"Boston Red Sox","BOS","AL","East",162,69,93,0.426,110386000
+"Chicago Cubs","CHC","NL","Central",162,61,101,0.377,80422700
+"Chicago White Sox","CHW","AL","Central",162,85,77,0.525,118208000
+"Cincinnati Reds","CIN","NL","Central",162,97,65,0.599,80309500
+"Cleveland Indians","CLE","AL","Central",162,68,94,0.42,78911300
+"Colorado Rockies","COL","NL","West",162,64,98,0.395,75485000
+"Detroit Tigers","DET","AL","Central",162,88,74,0.543,131394000
+"Houston Astros","HOU","NL","Central",162,55,107,0.34,37651000
+"Kansas City Royals","KCR","AL","Central",162,72,90,0.444,61747075
+"Los Angeles Angels of Anaheim","LAA","AL","West",162,89,73,0.549,140581000
+"Los Angeles Dodgers","LAD","NL","West",162,86,76,0.531,173319600
+"Miami Marlins","MIA","NL","East",162,69,93,0.426,107678000
+"Milwaukee Brewers","MIL","NL","Central",162,83,79,0.512,95717000
+"Minnesota Twins","MIN","AL","Central",162,66,96,0.407,99066000
+"New York Mets","NYM","NL","East",162,74,88,0.457,91621424
+"New York Yankees","NYY","AL","East",162,95,67,0.586,197977900
+"Oakland Athletics","OAK","AL","West",162,94,68,0.58,61202500
+"Philadelphia Phillies","PHI","NL","East",162,81,81,0.5,171501558
+"Pittsburgh Pirates","PIT","NL","Central",162,79,83,0.488,70077000
+"San Diego Padres","SDP","NL","West",162,76,86,0.469,54744700
+"Seattle Mariners","SEA","AL","West",162,75,87,0.463,78235600
+"San Francisco Giants","SFG","NL","West",162,94,68,0.58,117637350
+"St. Louis Cardinals","STL","NL","Central",162,88,74,0.543,112071000
+"Tampa Bay Rays","TBR","AL","East",162,90,72,0.556,63368700
+"Texas Rangers","TEX","AL","West",162,93,69,0.574,124119900
+"Toronto Blue Jays","TOR","AL","East",162,73,89,0.451,82352700
+"Washington Nationals","WSN","NL","East",162,98,64,0.605,90586000
