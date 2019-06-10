@@ -1,0 +1,11 @@
+---
+title: "Chapter 3"
+author: "Robert Kibet"
+date: "6/10/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+This is based on Manesh Book, practical Data Science, 2014
