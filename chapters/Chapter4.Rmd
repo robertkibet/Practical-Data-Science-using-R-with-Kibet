@@ -1,0 +1,128 @@
+---
+title: "Chapter4"
+author: "Robert Kibet"
+date: "6/11/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Data Visualization
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(DT)
+```
+
+Simple Data Visualization using ggplot2 package of the MLB study case during the regular season of 2012.
+Main qestion. **Determine whether teams with higher payroll will perform better**.
+```{r}
+mlb.league.raw <- read.csv("D:/projects/data_science/Practical-Data-Science-using-R-with-Kibet/source_datasets/teams.csv")
+attach(mlb.league.raw)
+datatable(head(mlb.league.raw, 5))
+```
+
+### Using Scatter Plots
+This function can take in vectors, functions or any R objects that has a plot() method as input
+```{r}
+plot(payroll, wins) 
+id = identify(payroll, wins, labels = code, n = 5)
+```
+
+further into scatter plots
+```{r}
+# Visualize AL and NL independently but on same charts
+s1 <- which(league == "AL")
+s2 <- which(league == "NL")
+
+plot(payroll[s1], wins[s1], xlim = range(payroll), ylim=range(wins), xlab = "Payroll", ylab = "Wins")
+points(payroll[s2], wins[s2], pch=2)
+```
+
+We can also assign a variable to the pch parameter and avoid using points function:
+```{r}
+plot(payroll, wins, pch=as.numeric(league), xlab = "Payroll", ylab="Wins")
+```
+
+We can split further variables using the pct collumn
+```{r}
+# 0.5 means teams with half or more wins, out of 162 games, this are 82 or more wins
+plot(payroll, wins, xlab="Payroll", ylab="Wins", pch=as.numeric(pct>0.5))
+
+```
+
+```{r}
+#We can get more insights to separate teams with more than half wins and those with less than half wins
+plot(payroll, wins, xlab="Payroll", ylab="Wins", pch=as.numeric(pct>0.5))
+lines(range(payroll), c(81,81), lty=2)
+```
+
+Using Legend, we can display more rich information to highlight the main aspects being displayed from our graph.
+`legend()``
+```{r}
+plot(payroll, wins, xlab="Payroll", ylab="Wins", pch=as.numeric(pct>0.5))
+legend('bottomright', c("NL","AL"), pch = c(1,2), col = league, title = "leagues")
+```
+
+### Using Bar Plots and Pie Charts
+Summarizing our data, we can first group the data using `by``
+
+```{r}
+by(payroll, league, sum)
+```
+
+We can also group by more than one variable:
+```{r}
+by(payroll, list(league, division), sum)
+```
+
+We can now draw a bar plot of this illustration
+```{r}
+#this calculates the sum of payroll grouped by the league names
+barplot(by(payroll, league, sum))
+```
+
+We can now add labels to our bar plots
+```{r}
+par(xpd=T, mar=par()$mar + c(0,0,0,4))
+barplot(by(payroll, list(division, league), sum), col=2:4)
+legend(2.5, 8e8, c("Central","East","West"), fill=2:4)
+```
+```{r}
+par(xpd=T, mar=par()$mar + c(0,0,0,4))
+barplot(by(payroll, list(division, league), sum), col=2:4, beside = T)
+legend(2.5, 8e8, c("Central","East","West"), fill=2:4)
+```
+
+### Pie Charts
+We can also generate pie charts using simple pie() function
+```{r}
+pie(by(as.numeric(payroll), league, sum))
+```
+We can also introduce labels to these charts
+```{r}
+labels = c("AL Central","AL East" , "AL West", "NL Central", "NL East", "NL West")
+pie(as.numeric(by(payroll, list(league,division), sum)), labels)
+```
+
+### GGPLOT2 Package
+This is based on grammar of graphics
+```{r}
+p<- ggplot(mlb.league.raw)
+p + aes(payroll,wins,shape=division,col=league) + 
+  layer(geom="point", stat = "identity", position = "identity")
+```
+
+We can style our plot more using ggthemes:
+```{r}
+p + aes(payroll,wins,shape=division,col=league) + 
+  layer(geom="point", stat = "identity", position = "identity") + 
+  theme_classic()
+```
+
+
+
+
+
+

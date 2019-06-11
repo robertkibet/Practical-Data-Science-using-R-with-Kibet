@@ -39,7 +39,7 @@ head(v2,5)
 After loading our data, the next step is cleaning this data.
 One way is looking for missing values and making a decision on this missing values.
 ```{r}
-survey.raw <- read.csv(file.choose(), stringsAsFactors = F)
+survey.raw <- read.csv('D:/projects/data_science/Practical-Data-Science-using-R-with-Kibet/source_datasets/survey.csv', stringsAsFactors = F)
 ```
 
 
