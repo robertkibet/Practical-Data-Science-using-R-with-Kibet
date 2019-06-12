@@ -1,0 +1,206 @@
+---
+title: "Chapter5"
+author: "Robert Kibet"
+date: "6/12/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(DT)
+```
+
+## Exploratory Data Analysis
+Using the US Census data, we can perform a case study. The areas
+are classified into counties or equivalent, metropolitan areas, metropolitan statistical
+areas, and micropolitan statistical areas. In the dataset, the type of an area is denoted
+by the legal/statistical area description (LSAD) variable.
+```{r}
+census.raw <- read.csv("D:/projects/data_science/Practical-Data-Science-using-R-with-Kibet/source_datasets/metropolitan.csv")
+attach(census.raw)
+datatable(head(census.raw, 5))
+```
+
+```{r}
+# get the size of our data
+dim(census.raw)
+```
+
+```{r}
+#get the number of rows
+nrow(census.raw)
+```
+
+Summarizing our data
+```{r}
+summary(census.raw)
+```
+
+Getting first and last records:
+```{r}
+# first 5 rows and 3 collumns
+head(census.raw[, 1:3], 5)
+```
+```{r}
+#last 5 records and 3 collumns
+tail(census.raw[, 1:3], 5)
+
+```
+
+```{r}
+# select where function: which()
+census.raw[which(census.raw$NAME=='Yazoo City, MS'), c('NAME','LSAD')]
+```
+
+```{r}
+#ordering data by a variable, collumn:
+head(sort(census.raw$CENSUS2010POP), 5)
+#options can be decreasing = F or T
+# head(sort(census.raw$CENSUS2010POP, decreasing = F), 5)
+```
+
+```{r}
+#sort a whole dataframe
+output = sort(census.raw$CENSUS2010POP,decreasing=T,index.return=T)
+census.raw[output$ix[1:10], 1:2]
+```
+```{r}
+# ordering the data using conventional R techniques:
+census.raw[order(census.raw$CENSUS2010POP[1:10]), 1:2]
+#this shows the first 10 results and the first 2 collumns of the data frame, ordered data.
+#one can also negate the output, to give the opposite of what is enlisted
+#one can also use more than one collumn and order the dataframe
+```
+
+```{r}
+#sorting data, grouping and splitting the data:
+head(which(census.raw$LSAD == 'Metropolitan Statistical Area'), 5)
+```
+```{r}
+#we can now get a grouped mean of a collumn based on another collumn
+#first parameter is the collumn we want to get our mean
+#second parameter is the collumn we want to group by
+#third parameter is our function, it could be Median, Mean, Sum ....etc
+by(census.raw$CENSUS2010POP, census.raw$LSAD, mean)
+```
+
+### using split()
+```{r}
+
+#first we split our data based on the collumn we want:
+census.raw.split <- split(census.raw, census.raw$LSAD)
+#then we loop through the values and output our desired data
+
+for(x in names(census.raw.split)){
+  census.raw.splitted.data <- census.raw.split[[x]]
+  print(x)
+  print(census.raw.splitted.data[order(census.raw.splitted.data$CENSUS2010POP)[1:5], c(1,3)])
+}
+```
+```{r}
+# We can view the data frames that resulted from the split() process
+names(census.raw.split)
+```
+
+```{r}
+# We can then access these data using the same data frames that have been splitted
+# Example:
+head(census.raw.split[['County or equivalent']], 5)
+#this shows us only grouped data from County or equivalent from the LSAD collumn, this data has been splitted to remain with only County or equivalent in the LSAD collumn
+```
+
+## Some Statistics
+```{r}
+#Some statistics
+#Mean
+mean(census.raw$CENSUS2010POP)
+```
+```{r}
+#Variance
+var(census.raw$CENSUS2010POP)
+```
+```{r}
+#Standard Deviation
+sd(census.raw$CENSUS2010POP)
+```
+
+```{r}
+#Correlation
+cor(census.raw$CENSUS2010POP, census.raw$NATURALINC2010)
+# Pearson correlation works -1 to 1
+# Higher positive values indicates a Higher coorelation
+# Lower negative values indicates lower correlation
+# 0 indicates Zero, No, correlation
+```
+```{r}
+#Covariance
+cov(census.raw$CENSUS2010POP, census.raw$NATURALINC2010)
+```
+
+```{r, warning=F, message=F}
+#Beautiful Correlation
+library(Hmisc)
+```
+
+```{r}
+#Lets style it up now
+# Display a simple Spearman Correlation
+cor(census.raw[,3:11], method = c("spearman"))
+```
+```{r, message=F, warning=F}
+#Correlation map Beautifier
+library(corrplot)
+```
+
+```{r}
+#Lets set is as a Variable and display a more presentable correlation heat Map
+corrplot(cor(census.raw[,3:11], method = c("spearman")))
+```
+```{r}
+#Lets set is as a Variable and display a more presentable correlation heat Map
+palette = colorRampPalette(c("green", "white", "red")) (20)
+heatmap(x = cor(census.raw[,3:11], method = c("spearman")), col = palette, symm = TRUE)
+```
+
+
+
+
+```{r}
+#How about comparison betweeen census population and domestic migration. More specifics
+cor(CENSUS2010POP,DOMESTICMIG2010)
+```
+
+```{r}
+#Using pairs() function to configure and generate a scatter plot between all variables held together by default
+panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...) {
+  usr <- par("usr"); on.exit(par(usr))
+  par(usr = c(0, 1, 0, 1))
+  r <- cor(x, y)
+  txt <- format(c(r, 0.123456789), digits = digits)[1]
+  txt <- paste(prefix, txt, sep = "")
+  if(missing(cex.cor)) cex.cor <- 1/strwidth(txt)
+  text(0.5, 0.5, txt, cex = cex.cor * abs(r))
+}
+pairs(census.raw[,3:11], lower.panel = panel.smooth, upper.panel = panel.cor)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
